@@ -26,7 +26,7 @@ def relu2deriv(output):
 weights_0_1 = 2 * np.random.random((3, hidden_size)) - 1
 weights_1_2 = 2 * np.random.random((hidden_size, 1)) - 1
 
-for iteration in range(60):
+for iteration in range(200):
     print("Iteration: " + str(iteration + 1))
     layer_2_err = 0
     for i in range(len(streetlights)):
