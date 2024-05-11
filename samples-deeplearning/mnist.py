@@ -30,10 +30,14 @@ for j in range(iterations):
     for i in range(len(images)):
         layer_0 = images[i:i+1]
         layer_1 = relu(np.dot(layer_0, weights_0_1))
+
+        dropout_mask = np.random.randint(2, size=layer_1.shape)
+        layer_1 *= dropout_mask * 2 #для компенсации 50% dropout mask
         layer_2 = np.dot(layer_1, weights_1_2)
 
         layer_2_delta = labels[i:i+1] - layer_2
         layer_1_delta = layer_2_delta.dot(weights_1_2.T) * relu2deriv(layer_1)
+        layer_1_delta *= dropout_mask
 
         err += np.sum(layer_2_delta ** 2)
         correct_cnt += int(np.argmax(layer_2) == np.argmax(labels[i:i+1]))
